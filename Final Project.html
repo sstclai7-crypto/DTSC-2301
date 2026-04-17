@@ -7515,7 +7515,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -7525,6 +7525,9 @@ a.anchor-link {
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2_contingency</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -7536,11 +7539,11 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Read data </span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">sawye</span><span class="se">\\</span><span class="s2">Downloads</span><span class="se">\\</span><span class="s2">DataScience(1)</span><span class="se">\\</span><span class="s2">DATASET</span><span class="se">\\</span><span class="s2">2025_masters_tournament_event_values (2).csv"</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">sawye</span><span class="se">\\</span><span class="s2">Downloads</span><span class="se">\\</span><span class="s2">DataScience(1)</span><span class="se">\\</span><span class="s2">DATASET</span><span class="se">\\</span><span class="s2">2025_masters_tournament_r1_values.csv"</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -7552,7 +7555,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7575,7 +7578,7 @@ a.anchor-link {
 <th>position</th>
 <th>player_name</th>
 <th>total_score</th>
-<th>r4_score</th>
+<th>r1_score</th>
 <th>sg_putt</th>
 <th>sg_arg</th>
 <th>sg_app</th>
@@ -7594,89 +7597,732 @@ a.anchor-link {
 <td>1</td>
 <td>McIlroy, Rory</td>
 <td>-11</td>
-<td>1.0</td>
-<td>-0.312</td>
-<td>0.767</td>
-<td>2.307</td>
-<td>0.668</td>
-<td>3.741</td>
-<td>3.429</td>
-<td>317.925</td>
-<td>0.625003</td>
-<td>0.652780</td>
-<td>33.297916</td>
+<td>0</td>
+<td>-1.108</td>
+<td>-0.932</td>
+<td>2.045</td>
+<td>1.584</td>
+<td>2.697</td>
+<td>1.589</td>
+<td>318.5</td>
+<td>0.71429</td>
+<td>0.61111</td>
+<td>31.0810</td>
 </tr>
 <tr>
 <th>1</th>
 <td>2</td>
 <td>Rose, Justin</td>
 <td>-11</td>
-<td>-6.0</td>
-<td>1.075</td>
-<td>0.351</td>
-<td>1.763</td>
-<td>0.240</td>
-<td>2.354</td>
-<td>3.429</td>
-<td>295.625</td>
-<td>0.767857</td>
-<td>0.763890</td>
-<td>39.949914</td>
+<td>-7</td>
+<td>5.270</td>
+<td>1.643</td>
+<td>2.785</td>
+<td>-1.108</td>
+<td>3.320</td>
+<td>8.589</td>
+<td>293.6</td>
+<td>0.64286</td>
+<td>0.77778</td>
+<td>26.4087</td>
 </tr>
 <tr>
 <th>2</th>
 <td>3</td>
 <td>Reed, Patrick</td>
 <td>-9</td>
-<td>-3.0</td>
-<td>0.394</td>
-<td>0.931</td>
-<td>0.992</td>
-<td>0.612</td>
-<td>2.534</td>
-<td>2.929</td>
-<td>297.975</td>
-<td>0.839283</td>
-<td>0.666667</td>
-<td>40.315341</td>
+<td>-1</td>
+<td>-0.623</td>
+<td>0.147</td>
+<td>2.018</td>
+<td>1.047</td>
+<td>3.212</td>
+<td>2.589</td>
+<td>297.2</td>
+<td>0.92857</td>
+<td>0.72222</td>
+<td>34.6933</td>
 </tr>
 <tr>
 <th>3</th>
 <td>4</td>
 <td>Scheffler, Scottie</td>
 <td>-8</td>
-<td>-3.0</td>
-<td>1.042</td>
-<td>1.121</td>
-<td>0.628</td>
-<td>-0.113</td>
-<td>1.636</td>
-<td>2.679</td>
-<td>304.850</td>
-<td>0.714290</td>
-<td>0.625000</td>
-<td>38.668271</td>
+<td>-4</td>
+<td>2.902</td>
+<td>1.163</td>
+<td>0.537</td>
+<td>0.988</td>
+<td>2.688</td>
+<td>5.589</td>
+<td>306.7</td>
+<td>0.71429</td>
+<td>0.61111</td>
+<td>42.4736</td>
 </tr>
 <tr>
 <th>4</th>
 <td>T5</td>
 <td>Im, Sungjae</td>
 <td>-7</td>
-<td>-3.0</td>
-<td>0.679</td>
-<td>1.462</td>
-<td>-0.060</td>
-<td>0.347</td>
-<td>1.749</td>
-<td>2.429</td>
-<td>298.050</td>
-<td>0.803570</td>
-<td>0.638890</td>
-<td>36.904072</td>
+<td>-1</td>
+<td>2.604</td>
+<td>0.111</td>
+<td>-0.097</td>
+<td>-0.028</td>
+<td>-0.014</td>
+<td>2.589</td>
+<td>302.4</td>
+<td>0.64286</td>
+<td>0.55556</td>
+<td>26.4601</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0fb41ebe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">sawye</span><span class="se">\\</span><span class="s2">Downloads</span><span class="se">\\</span><span class="s2">DataScience(1)</span><span class="se">\\</span><span class="s2">DATASET</span><span class="se">\\</span><span class="s2">2025_masters_tournament_r2_values.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>position</th>
+<th>player_name</th>
+<th>total_score</th>
+<th>r2_score</th>
+<th>sg_putt</th>
+<th>sg_arg</th>
+<th>sg_app</th>
+<th>sg_ott</th>
+<th>sg_t2g</th>
+<th>sg_total</th>
+<th>distance</th>
+<th>accuracy</th>
+<th>gir</th>
+<th>prox_fw</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>1</td>
+<td>McIlroy, Rory</td>
+<td>-11</td>
+<td>-6</td>
+<td>2.151</td>
+<td>0.413</td>
+<td>3.643</td>
+<td>0.467</td>
+<td>4.523</td>
+<td>6.674</td>
+<td>316.0</td>
+<td>0.50000</td>
+<td>0.77778</td>
+<td>32.9339</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2</td>
+<td>Rose, Justin</td>
+<td>-11</td>
+<td>-1</td>
+<td>2.082</td>
+<td>0.020</td>
+<td>-1.043</td>
+<td>0.615</td>
+<td>-0.408</td>
+<td>1.674</td>
+<td>289.2</td>
+<td>0.85714</td>
+<td>0.55556</td>
+<td>66.6944</td>
+</tr>
+<tr>
+<th>2</th>
+<td>3</td>
+<td>Reed, Patrick</td>
+<td>-9</td>
+<td>-2</td>
+<td>0.113</td>
+<td>3.286</td>
+<td>-1.178</td>
+<td>0.453</td>
+<td>2.561</td>
+<td>2.674</td>
+<td>296.2</td>
+<td>0.85714</td>
+<td>0.61111</td>
+<td>52.2363</td>
+</tr>
+<tr>
+<th>3</th>
+<td>4</td>
+<td>Scheffler, Scottie</td>
+<td>-8</td>
+<td>-1</td>
+<td>-0.958</td>
+<td>1.878</td>
+<td>1.319</td>
+<td>-0.566</td>
+<td>2.632</td>
+<td>1.674</td>
+<td>299.9</td>
+<td>0.71429</td>
+<td>0.66667</td>
+<td>30.2704</td>
+</tr>
+<tr>
+<th>4</th>
+<td>T5</td>
+<td>Im, Sungjae</td>
+<td>-7</td>
+<td>-2</td>
+<td>1.463</td>
+<td>1.047</td>
+<td>-0.113</td>
+<td>0.276</td>
+<td>1.210</td>
+<td>2.674</td>
+<td>298.2</td>
+<td>0.78571</td>
+<td>0.77778</td>
+<td>39.6705</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e15eabe5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Creating a New dataset where the two rounds are averaged out</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d7381505">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">r1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">sawye</span><span class="se">\\</span><span class="s2">Downloads</span><span class="se">\\</span><span class="s2">DataScience(1)</span><span class="se">\\</span><span class="s2">DATASET</span><span class="se">\\</span><span class="s2">2025_masters_tournament_r1_values.csv"</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">sawye</span><span class="se">\\</span><span class="s2">Downloads</span><span class="se">\\</span><span class="s2">DataScience(1)</span><span class="se">\\</span><span class="s2">DATASET</span><span class="se">\\</span><span class="s2">2025_masters_tournament_r2_values.csv"</span><span class="p">)</span>
+
+<span class="n">merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"player_name"</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s2">"_r1"</span><span class="p">,</span> <span class="s2">"_r2"</span><span class="p">))</span>
+
+<span class="n">avg_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">avg_df</span><span class="p">[</span><span class="s2">"player_name"</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="s2">"player_name"</span><span class="p">]</span>
+
+<span class="n">avg_df</span><span class="p">[</span><span class="s2">"position"</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="s2">"position_r2"</span><span class="p">]</span>
+
+<span class="n">common_cols</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"total_score"</span><span class="p">,</span>
+    <span class="s2">"sg_putt"</span><span class="p">,</span>
+    <span class="s2">"sg_arg"</span><span class="p">,</span>
+    <span class="s2">"sg_app"</span><span class="p">,</span>
+    <span class="s2">"sg_ott"</span><span class="p">,</span>
+    <span class="s2">"sg_t2g"</span><span class="p">,</span>
+    <span class="s2">"sg_total"</span><span class="p">,</span>
+    <span class="s2">"distance"</span><span class="p">,</span>
+    <span class="s2">"accuracy"</span><span class="p">,</span>
+    <span class="s2">"gir"</span><span class="p">,</span>
+    <span class="s2">"prox_fw"</span>
+<span class="p">]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">common_cols</span><span class="p">:</span>
+    <span class="n">avg_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_r1"</span><span class="p">]</span> <span class="o">+</span> <span class="n">merged</span><span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_r2"</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="n">avg_df</span><span class="p">[</span><span class="s2">"avg_round_score"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="s2">"r1_score"</span><span class="p">]</span> <span class="o">+</span> <span class="n">merged</span><span class="p">[</span><span class="s2">"r2_score"</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>          player_name position  total_score  sg_putt  sg_arg  sg_app  sg_ott  \
+0       McIlroy, Rory        1        -11.0   0.5215 -0.2595   2.844  1.0255   
+1        Rose, Justin        2        -11.0   3.6760  0.8315   0.871 -0.2465   
+2       Reed, Patrick        3         -9.0  -0.2550  1.7165   0.420  0.7500   
+3  Scheffler, Scottie        4         -8.0   0.9720  1.5205   0.928  0.2110   
+4         Im, Sungjae       T5         -7.0   2.0335  0.5790  -0.105  0.1240   
+
+   sg_t2g  sg_total  distance  accuracy       gir   prox_fw  avg_round_score  
+0  3.6100    4.1315    317.25  0.607145  0.694445  32.00745             -3.0  
+1  1.4560    5.1315    291.40  0.750000  0.666670  46.55155             -4.0  
+2  2.8865    2.6315    296.70  0.892855  0.666665  43.46480             -1.5  
+3  2.6600    3.6315    303.30  0.714290  0.638890  36.37200             -2.5  
+4  0.5980    2.6315    300.30  0.714285  0.666670  33.06530             -1.5  
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=82b7ab3a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">sawye</span><span class="se">\\</span><span class="s2">Downloads</span><span class="se">\\</span><span class="s2">DataScience(1)</span><span class="se">\\</span><span class="s2">DATASET</span><span class="se">\\</span><span class="s2">masters_avg_dataset.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>player_name</th>
+<th>total_score</th>
+<th>sg_putt</th>
+<th>sg_arg</th>
+<th>sg_app</th>
+<th>sg_ott</th>
+<th>sg_t2g</th>
+<th>sg_total</th>
+<th>distance</th>
+<th>accuracy</th>
+<th>gir</th>
+<th>prox_fw</th>
+<th>avg_round_score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>McIlroy, Rory</td>
+<td>-11.0</td>
+<td>0.5215</td>
+<td>-0.2595</td>
+<td>2.844</td>
+<td>1.0255</td>
+<td>3.6100</td>
+<td>4.1315</td>
+<td>317.25</td>
+<td>0.607145</td>
+<td>0.694445</td>
+<td>32.00745</td>
+<td>-3.0</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Rose, Justin</td>
+<td>-11.0</td>
+<td>3.6760</td>
+<td>0.8315</td>
+<td>0.871</td>
+<td>-0.2465</td>
+<td>1.4560</td>
+<td>5.1315</td>
+<td>291.40</td>
+<td>0.750000</td>
+<td>0.666670</td>
+<td>46.55155</td>
+<td>-4.0</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Reed, Patrick</td>
+<td>-9.0</td>
+<td>-0.2550</td>
+<td>1.7165</td>
+<td>0.420</td>
+<td>0.7500</td>
+<td>2.8865</td>
+<td>2.6315</td>
+<td>296.70</td>
+<td>0.892855</td>
+<td>0.666665</td>
+<td>43.46480</td>
+<td>-1.5</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Scheffler, Scottie</td>
+<td>-8.0</td>
+<td>0.9720</td>
+<td>1.5205</td>
+<td>0.928</td>
+<td>0.2110</td>
+<td>2.6600</td>
+<td>3.6315</td>
+<td>303.30</td>
+<td>0.714290</td>
+<td>0.638890</td>
+<td>36.37200</td>
+<td>-2.5</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Im, Sungjae</td>
+<td>-7.0</td>
+<td>2.0335</td>
+<td>0.5790</td>
+<td>-0.105</td>
+<td>0.1240</td>
+<td>0.5980</td>
+<td>2.6315</td>
+<td>300.30</td>
+<td>0.714285</td>
+<td>0.666670</td>
+<td>33.06530</td>
+<td>-1.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f29ef2b6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Basic Model</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=79e35d5d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+   <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_target</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">"total_score"</span><span class="p">)</span>  <span class="c1"># lower score = better</span>
+    
+    <span class="n">df</span><span class="p">[</span><span class="s2">"made_cut"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">50</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s2">"made_cut"</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+   <span class="n">features</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"sg_putt"</span><span class="p">,</span> <span class="s2">"sg_arg"</span><span class="p">,</span> <span class="s2">"sg_app"</span><span class="p">,</span> <span class="s2">"sg_ott"</span><span class="p">,</span>
+        <span class="s2">"sg_t2g"</span><span class="p">,</span> <span class="s2">"sg_total"</span><span class="p">,</span>
+        <span class="s2">"distance"</span><span class="p">,</span> <span class="s2">"accuracy"</span><span class="p">,</span> <span class="s2">"gir"</span><span class="p">,</span> <span class="s2">"prox_fw"</span><span class="p">,</span>
+        <span class="s2">"avg_round_score"</span>
+    <span class="p">]</span>
+   <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
+   <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"made_cut"</span><span class="p">]</span>
+   <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">train_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+    <span class="p">)</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Accuracy:"</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Classification Report:</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">sawye</span><span class="se">\\</span><span class="s2">Downloads</span><span class="se">\\</span><span class="s2">DataScience(1)</span><span class="se">\\</span><span class="s2">DATASET</span><span class="se">\\</span><span class="s2">masters_avg_dataset.csv"</span><span class="p">)</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">create_target</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">prepare_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="n">model</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    
+    <span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">create_target</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">prepare_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="n">model</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    
+    <span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Accuracy: 0.631578947368421
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.44      0.67      0.53         6
+           1       0.80      0.62      0.70        13
+
+    accuracy                           0.63        19
+   macro avg       0.62      0.64      0.61        19
+weighted avg       0.69      0.63      0.64        19
+
+Accuracy: 0.631578947368421
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.44      0.67      0.53         6
+           1       0.80      0.62      0.70        13
+
+    accuracy                           0.63        19
+   macro avg       0.62      0.64      0.61        19
+weighted avg       0.69      0.63      0.64        19
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=657df7bf">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">find_minimum_profile</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Finds approximate minimum stats needed to make the cut</span>
+<span class="sd">    using average feature values and model coefficients</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Get average player stats</span>
+    <span class="n">avg_values</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Get model coefficients</span>
+    <span class="n">coefs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- MINIMUM PROFILE TO MAKE CUT (Approx) ---</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="c1"># Solve for probability = 0.5</span>
+    <span class="c1"># Logistic equation: z = 0 → boundary</span>
+    <span class="c1"># z = intercept + sum(coef * x)</span>
+
+    <span class="c1"># We'll isolate one important variable (sg_total)</span>
+    <span class="n">feature_names</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="c1"># Choose most important feature (largest coefficient)</span>
+    <span class="n">important_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coefs</span><span class="p">))</span>
+    <span class="n">important_feature</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">[</span><span class="n">important_idx</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Most important stat: </span><span class="si">{</span><span class="n">important_feature</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="c1"># Solve for that feature while holding others constant</span>
+    <span class="n">other_sum</span> <span class="o">=</span> <span class="n">intercept</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">feature_names</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">important_idx</span><span class="p">:</span>
+            <span class="n">other_sum</span> <span class="o">+=</span> <span class="n">coefs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">avg_values</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
+
+    <span class="n">required_value</span> <span class="o">=</span> <span class="o">-</span><span class="n">other_sum</span> <span class="o">/</span> <span class="n">coefs</span><span class="p">[</span><span class="n">important_idx</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Estimated minimum </span><span class="si">{</span><span class="n">important_feature</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">required_value</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Other stats held at average:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">avg_values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ae6fbf1a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">find_minimum_profile</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+--- MINIMUM PROFILE TO MAKE CUT (Approx) ---
+
+Most important stat: sg_arg
+
+Estimated minimum sg_arg: 0.142
+
+Other stats held at average:
+sg_putt             -0.000005
+sg_arg              -0.000016
+sg_app              -0.000016
+sg_ott              -0.000053
+sg_t2g              -0.000005
+sg_total            -0.000079
+distance           298.066316
+accuracy             0.734211
+gir                  0.619884
+prox_fw             38.440987
+avg_round_score      1.131579
+dtype: float64
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ce7c4912">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">cut_players</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">prob</span> <span class="o">&gt;=</span> <span class="mf">0.7</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- AVERAGE STATS OF SAFE PLAYERS ---</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cut_players</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+--- AVERAGE STATS OF SAFE PLAYERS ---
+
+sg_putt              0.572816
+sg_arg               0.563132
+sg_app               0.905697
+sg_ott               0.208316
+sg_t2g               1.677145
+sg_total             2.249921
+distance           300.410526
+accuracy             0.740602
+gir                  0.674708
+prox_fw             36.662524
+avg_round_score     -1.118421
+dtype: float64
+</pre>
 </div>
 </div>
 </div>
